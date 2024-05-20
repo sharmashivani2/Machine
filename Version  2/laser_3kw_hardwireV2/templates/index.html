@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf8">
+	<title>Laser Api</title>
+	<style>
+		a{
+			text-decoration: none;
+
+		}
+.btn{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  background-color: white; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+.btn1{
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+	</style>
+</head>
+<body>
+  <div class="btn1">
+    <input class="btn" id="id1ron" type="submit" value="RemoteKey On" onclick="submit('ron')">
+    
+  </div>
+  <div class="btn1">
+    <input class="btn" id="id1roff" type="submit" value="RemoteKey Off" onclick="submit('roff')">
+    
+  </div>
+  <div class="btn1">
+    <input class="btn" id="id1ron" type="submit" value="StartButton On" onclick="submit('ron')">
+    
+  </div>
+  <div class="btn1">
+    <input class="btn" id="id1roff" type="submit" value="StartButton Off" onclick="submit('roff')">
+    
+  </div>
+	<div class="btn1">
+		<input class="btn" id="id1on" type="submit" value="Laser On" onclick="submit('on')">	
+	</div>
+  <div class="btn1">
+    <input class="btn" id="id1sp" type="submit" value="Set Power" onclick="submit('sp')">  
+  </div>
+    <div class="btn1">
+    Fire Time: <input class="" id="id1t" type="input" value="0">
+  </div>
+      <div class="btn1">
+    power level: <input class="" id="id1p" type="input" value="1">
+  </div>
+		<div class="btn1">
+		<input class="btn" id="id1off" type="submit" value="Laser Off" onclick="submit('off')">
+	</div>
+	
+	<script type="text/javascript">
+  document.getElementById("id1t").addEventListener("change", function() {
+    t1 = Number(document.getElementById('id1t').value)
+  });
+  document.getElementById("id1p").addEventListener("change", function() {
+    pw = Number(document.getElementById('id1p').value)
+  });
+    function submit(id) {
+        t1 = Number(document.getElementById('id1t').value)
+        pw = Number(document.getElementById('id1p').value)
+        console.log(t1)
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                console.log(xhr.response);
+                if(id == "off"){
+                	var y = document.getElementsByClassName("btn");
+					var i;
+					for (i = 0; i < y.length; i++) {
+ 				 	y[i].style.backgroundColor = "white";
+						}
+                	document.getElementById("id1"+id).style.background='rgb(247, 0, 0) none repeat scroll 0% 0%';	
+                	}
+                else{
+					var y = document.getElementsByClassName("btn");
+					var i;
+					for (i = 0; i < y.length; i++) {
+ 					y[i].style.backgroundColor = "white";
+					}
+				document.getElementById("id1"+id).style.background='rgb(100, 255, 57) none repeat scroll 0% 0%';
+            }
+        }
+        }
+        if(id == 'on'){
+        console.log('http://localhost:3020/'+id+'?tt='+t1)
+        xhr.open('get', '/'+id+'?tt='+t1, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.send();
+    }
+    if(id == 'sp'){
+        console.log('http://localhost:3020/'+id+'?pw='+pw)
+        xhr.open('get', '/'+id+'?pw='+pw, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.send();
+    }
+    else{
+        xhr.open('get', '/'+id, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.send();
+      }
+    }
+
+	</script>
+	</body>
+	</html>
